@@ -14,146 +14,146 @@ type teststruct struct {
 
 func Test_Ptr(t *testing.T) {
 	t.Run("struct", func(t *testing.T) {
-		myVal := teststruct{foo: "baz", bar: 42}
+		value := teststruct{foo: "baz", bar: 42}
 
-		myPtr := Ptr(myVal)
-		assert.Equal(t, myVal, *myPtr)
+		pointer := Ptr(value)
+		assert.Equal(t, value, *pointer)
 	})
 
 	t.Run("slice/string", func(t *testing.T) {
-		myVal := []string{"foo", "bar"}
+		value := []string{"foo", "bar"}
 
-		myPtr := Ptr(myVal)
-		assert.Equal(t, myVal, *myPtr)
+		pointer := Ptr(value)
+		assert.Equal(t, value, *pointer)
 	})
 
 	t.Run("slice/struct", func(t *testing.T) {
-		myVal := []teststruct{
+		value := []teststruct{
 			{"foo", 42},
 			{"bar", 69},
 		}
 
-		myPtr := Ptr(myVal)
-		assert.Equal(t, myVal, *myPtr)
+		pointer := Ptr(value)
+		assert.Equal(t, value, *pointer)
 	})
 }
 
 func Test_PtrSlice(t *testing.T) {
 	t.Run("string[]", func(t *testing.T) {
-		myVal := []string{"foo", "bar", "baz"}
+		value := []string{"foo", "bar", "baz"}
 
-		myPtr := PtrSlice(myVal)
-		require.Len(t, myPtr, len(myVal))
-		for i := range myVal {
-			assert.Equal(t, myVal[i], *myPtr[i])
+		pointer := PtrSlice(value)
+		require.Len(t, pointer, len(value))
+		for i := range value {
+			assert.Equal(t, value[i], *pointer[i])
 		}
 	})
 
 	t.Run("struct[]", func(t *testing.T) {
-		myVal := []teststruct{
+		value := []teststruct{
 			{"foo", 42},
 			{"bar", 69},
 			{"baz", 99},
 		}
 
-		myPtr := PtrSlice(myVal)
-		require.Len(t, myPtr, len(myVal))
-		for i := range myVal {
-			assert.Equal(t, myVal[i], *myPtr[i])
+		pointer := PtrSlice(value)
+		require.Len(t, pointer, len(value))
+		for i := range value {
+			assert.Equal(t, value[i], *pointer[i])
 		}
 	})
 }
 
 func Test_PtrMap(t *testing.T) {
 	t.Run("[string]string", func(t *testing.T) {
-		myVal := map[string]string{
+		value := map[string]string{
 			"foo": "foo",
 			"bar": "bar",
 			"baz": "baz",
 		}
 
-		myPtr := PtrMap(myVal)
-		require.Len(t, myPtr, len(myVal))
-		for k := range myVal {
-			assert.Equal(t, myVal[k], *myPtr[k])
+		pointer := PtrMap(value)
+		require.Len(t, pointer, len(value))
+		for k := range value {
+			assert.Equal(t, value[k], *pointer[k])
 		}
 	})
 
 	t.Run("[int]string", func(t *testing.T) {
-		myVal := map[int]string{
+		value := map[int]string{
 			42: "foo",
 			69: "bar",
 			99: "baz",
 		}
 
-		myPtr := PtrMap(myVal)
-		require.Len(t, myPtr, len(myVal))
-		for k := range myVal {
-			assert.Equal(t, myVal[k], *myPtr[k])
+		pointer := PtrMap(value)
+		require.Len(t, pointer, len(value))
+		for k := range value {
+			assert.Equal(t, value[k], *pointer[k])
 		}
 	})
 
 	t.Run("[bool]int", func(t *testing.T) {
-		myVal := map[bool]int{
+		value := map[bool]int{
 			true:  42,
 			false: 69,
 		}
 
-		myPtr := PtrMap(myVal)
-		require.Len(t, myPtr, len(myVal))
-		for k := range myVal {
-			assert.Equal(t, myVal[k], *myPtr[k])
+		pointer := PtrMap(value)
+		require.Len(t, pointer, len(value))
+		for k := range value {
+			assert.Equal(t, value[k], *pointer[k])
 		}
 	})
 
 	t.Run("[string]struct", func(t *testing.T) {
-		myVal := map[string]teststruct{
+		value := map[string]teststruct{
 			"foo": {"foo", 42},
 			"bar": {"bar", 69},
 			"baz": {"baz", 420},
 		}
 
-		myPtr := PtrMap(myVal)
-		require.Len(t, myPtr, len(myVal))
-		for k := range myVal {
-			assert.Equal(t, myVal[k], *myPtr[k])
+		pointer := PtrMap(value)
+		require.Len(t, pointer, len(value))
+		for k := range value {
+			assert.Equal(t, value[k], *pointer[k])
 		}
 	})
 }
 
 func Test_Value(t *testing.T) {
 	t.Run("struct", func(t *testing.T) {
-		myPtr := &teststruct{foo: "baz", bar: 42}
+		pointer := &teststruct{foo: "baz", bar: 42}
 
-		myValue := Value(myPtr)
-		assert.Equal(t, *myPtr, myValue)
-		assert.Equal(t, myPtr, &myValue)
+		valueue := Value(pointer)
+		assert.Equal(t, *pointer, valueue)
+		assert.Equal(t, pointer, &valueue)
 	})
 
 	t.Run("slice/string", func(t *testing.T) {
-		myPtr := &[]string{"foo", "bar"}
+		pointer := &[]string{"foo", "bar"}
 
-		myValue := Value(myPtr)
-		assert.Equal(t, *myPtr, myValue)
-		assert.Equal(t, myPtr, &myValue)
+		valueue := Value(pointer)
+		assert.Equal(t, *pointer, valueue)
+		assert.Equal(t, pointer, &valueue)
 	})
 
 	t.Run("slice/struct", func(t *testing.T) {
-		myPtr := &[]teststruct{
+		pointer := &[]teststruct{
 			{"foo", 42},
 			{"bar", 69},
 		}
 
-		myValue := Value(myPtr)
-		assert.Equal(t, *myPtr, myValue)
-		assert.Equal(t, myPtr, &myValue)
+		valueue := Value(pointer)
+		assert.Equal(t, *pointer, valueue)
+		assert.Equal(t, pointer, &valueue)
 	})
 
 	t.Run("nil", func(t *testing.T) {
-		var myPtr *teststruct
+		var pointer *teststruct
 
-		myValue := Value(myPtr)
-		assert.Equal(t, teststruct{}, myValue)
+		valueue := Value(pointer)
+		assert.Equal(t, teststruct{}, valueue)
 	})
 }
 
@@ -162,12 +162,12 @@ func Test_ValueSlice(t *testing.T) {
 		foo := "foo"
 		bar := "bar"
 		baz := "baz"
-		myPtr := []*string{&foo, &bar, &baz}
+		pointer := []*string{&foo, &bar, &baz}
 
-		myVal := ValueSlice(myPtr)
-		require.Len(t, myVal, len(myPtr))
-		for i := range myPtr {
-			assert.Equal(t, *myPtr[i], myVal[i])
+		value := ValueSlice(pointer)
+		require.Len(t, value, len(pointer))
+		for i := range pointer {
+			assert.Equal(t, *pointer[i], value[i])
 		}
 	})
 
@@ -175,12 +175,12 @@ func Test_ValueSlice(t *testing.T) {
 		foo := teststruct{"foo", 42}
 		bar := teststruct{"bar", 69}
 		baz := teststruct{"baz", 99}
-		myPtr := []*teststruct{&foo, &bar, &baz}
+		pointer := []*teststruct{&foo, &bar, &baz}
 
-		myVal := ValueSlice(myPtr)
-		require.Len(t, myVal, len(myPtr))
-		for i := range myPtr {
-			assert.Equal(t, *myPtr[i], myVal[i])
+		value := ValueSlice(pointer)
+		require.Len(t, value, len(pointer))
+		for i := range pointer {
+			assert.Equal(t, *pointer[i], value[i])
 		}
 	})
 }
@@ -190,16 +190,16 @@ func Test_ValueMap(t *testing.T) {
 		foo := "foo"
 		bar := "bar"
 		baz := "baz"
-		myPtr := map[string]*string{
+		pointer := map[string]*string{
 			"foo": &foo,
 			"bar": &bar,
 			"baz": &baz,
 		}
 
-		myVal := ValueMap(myPtr)
-		require.Len(t, myVal, len(myVal))
-		for k := range myPtr {
-			assert.Equal(t, *myPtr[k], myVal[k])
+		value := ValueMap(pointer)
+		require.Len(t, value, len(value))
+		for k := range pointer {
+			assert.Equal(t, *pointer[k], value[k])
 		}
 	})
 
@@ -207,31 +207,31 @@ func Test_ValueMap(t *testing.T) {
 		foo := "foo"
 		bar := "bar"
 		baz := "baz"
-		myPtr := map[int]*string{
+		pointer := map[int]*string{
 			42: &foo,
 			69: &bar,
 			99: &baz,
 		}
 
-		myVal := ValueMap(myPtr)
-		require.Len(t, myVal, len(myVal))
-		for k := range myPtr {
-			assert.Equal(t, *myPtr[k], myVal[k])
+		value := ValueMap(pointer)
+		require.Len(t, value, len(value))
+		for k := range pointer {
+			assert.Equal(t, *pointer[k], value[k])
 		}
 	})
 
 	t.Run("[bool]int", func(t *testing.T) {
 		b1 := 42
 		b2 := 69
-		myPtr := map[bool]*int{
+		pointer := map[bool]*int{
 			true:  &b1,
 			false: &b2,
 		}
 
-		myVal := ValueMap(myPtr)
-		require.Len(t, myVal, len(myVal))
-		for k := range myPtr {
-			assert.Equal(t, *myPtr[k], myVal[k])
+		value := ValueMap(pointer)
+		require.Len(t, value, len(value))
+		for k := range pointer {
+			assert.Equal(t, *pointer[k], value[k])
 		}
 	})
 
@@ -239,16 +239,16 @@ func Test_ValueMap(t *testing.T) {
 		foo := teststruct{"foo", 42}
 		bar := teststruct{"bar", 69}
 		baz := teststruct{"baz", 99}
-		myPtr := map[string]*teststruct{
+		pointer := map[string]*teststruct{
 			"foo": &foo,
 			"bar": &bar,
 			"baz": &baz,
 		}
 
-		myVal := ValueMap(myPtr)
-		require.Len(t, myVal, len(myVal))
-		for k := range myPtr {
-			assert.Equal(t, *myPtr[k], myVal[k])
+		value := ValueMap(pointer)
+		require.Len(t, value, len(value))
+		for k := range pointer {
+			assert.Equal(t, *pointer[k], value[k])
 		}
 	})
 }
