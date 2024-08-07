@@ -76,9 +76,9 @@ func genSrc() error {
 	codeGen := codeGenHeader
 
 	for _, t := range types {
-		codeGen += ptr(t)
-		codeGen += ptrSlice(t)
-		codeGen += ptrMap(t)
+		codeGen += to(t)
+		codeGen += toSlice(t)
+		codeGen += toMap(t)
 		codeGen += value(t)
 		codeGen += valueSlice(t)
 		codeGen += valueMap(t)
@@ -93,9 +93,9 @@ func genSrc() error {
 	return nil
 }
 
-func ptr(t supportedTypes) string {
+func to(t supportedTypes) string {
 	return fmt.Sprintf(`func %s(v %s) *%s {
-	return Ptr(v)
+	return To(v)
 }
 `,
 		capitalize.String(t.name),
@@ -103,9 +103,9 @@ func ptr(t supportedTypes) string {
 		t.dataType,
 	)
 }
-func ptrSlice(t supportedTypes) string {
+func toSlice(t supportedTypes) string {
 	return fmt.Sprintf(`func %sSlice(v []%s) []*%s {
-	return PtrSlice(v)
+	return ToSlice(v)
 }
 `,
 		capitalize.String(t.name),
@@ -113,9 +113,9 @@ func ptrSlice(t supportedTypes) string {
 		t.dataType,
 	)
 }
-func ptrMap(t supportedTypes) string {
+func toMap(t supportedTypes) string {
 	return fmt.Sprintf(`func %sMap(v map[string]%s) map[string]*%s {
-	return PtrMap(v)
+	return ToMap(v)
 }
 `,
 		capitalize.String(t.name),
@@ -171,7 +171,7 @@ func genTest() error {
 
 	for _, t := range types {
 		if strings.Contains(t.dataType, "int") || strings.Contains(t.dataType, "float") || strings.Contains(t.dataType, "byte") {
-			codeGen += testPtrIntFloatAndByte(t)
+			codeGen += testToIntFloatAndByte(t)
 			codeGen += testValueIntFloatAndByte(t)
 		}
 	}
@@ -185,7 +185,7 @@ func genTest() error {
 	return nil
 }
 
-func testPtrIntFloatAndByte(t supportedTypes) string {
+func testToIntFloatAndByte(t supportedTypes) string {
 	capitalized := capitalize.String(t.name)
 	return fmt.Sprintf(`func Test_%s(t *testing.T) {
 	t.Run("%s", func(t *testing.T) {

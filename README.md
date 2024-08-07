@@ -13,6 +13,8 @@ someString := "foo"
 someSDK.SomeMethod(&someString)
 
 // after
+someSDK.SomeMethod(ptr.To("foo"))
+// or
 someSDK.SomeMethod(ptr.String("foo"))
 ```
 
@@ -27,17 +29,19 @@ if strPtr != nil {
 
 // after
 strPtr := someSDK.GetStringPtr()
-str := ptr.StrinValue(strPtr)
+str := ptr.Value(strPtr)
+// or
+str := ptr.StringValue(strPtr)
 ```
 
 ## Generic core funcs
-Core functions use generics `Ptr[T any](v T) *t` and `Value[T any](p *T) T`.
+Core functions use generics `To[T any](v T) *t` and `Value[T any](p *T) T`.
 So you can easily use it with structs, slices and maps.
 
 It also offers slice and maps transformations like the aws utility.
 ```go
-func PtrSlice[T any](v []T) []*T
-func PtrMap[K comparable, T any](v map[K]T) map[K]*T
+func ToSlice[T any](v []T) []*T
+func ToMap[K comparable, T any](v map[K]T) map[K]*T
 func ValueSlice[T any](p []*T) []T
 func ValueMap[K comparable, T any](v map[K]*T) map[K]T
 ```
@@ -56,6 +60,6 @@ For sake of avoiding writing the same lines of code for both `ptr.go` and `ptr_t
 
 To generaten run:
 ```shell
-cd geneator
+cd generator
 go run main.go
 ```

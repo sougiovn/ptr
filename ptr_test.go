@@ -12,18 +12,18 @@ type teststruct struct {
 	bar int
 }
 
-func Test_Ptr(t *testing.T) {
+func Test_To(t *testing.T) {
 	t.Run("struct", func(t *testing.T) {
 		value := teststruct{foo: "baz", bar: 42}
 
-		pointer := Ptr(value)
+		pointer := To(value)
 		assert.Equal(t, value, *pointer)
 	})
 
 	t.Run("slice/string", func(t *testing.T) {
 		value := []string{"foo", "bar"}
 
-		pointer := Ptr(value)
+		pointer := To(value)
 		assert.Equal(t, value, *pointer)
 	})
 
@@ -33,16 +33,16 @@ func Test_Ptr(t *testing.T) {
 			{"bar", 69},
 		}
 
-		pointer := Ptr(value)
+		pointer := To(value)
 		assert.Equal(t, value, *pointer)
 	})
 }
 
-func Test_PtrSlice(t *testing.T) {
+func Test_ToSlice(t *testing.T) {
 	t.Run("string[]", func(t *testing.T) {
 		value := []string{"foo", "bar", "baz"}
 
-		pointer := PtrSlice(value)
+		pointer := ToSlice(value)
 		require.Len(t, pointer, len(value))
 		for i := range value {
 			assert.Equal(t, value[i], *pointer[i])
@@ -56,7 +56,7 @@ func Test_PtrSlice(t *testing.T) {
 			{"baz", 99},
 		}
 
-		pointer := PtrSlice(value)
+		pointer := ToSlice(value)
 		require.Len(t, pointer, len(value))
 		for i := range value {
 			assert.Equal(t, value[i], *pointer[i])
@@ -64,7 +64,7 @@ func Test_PtrSlice(t *testing.T) {
 	})
 }
 
-func Test_PtrMap(t *testing.T) {
+func Test_ToMap(t *testing.T) {
 	t.Run("[string]string", func(t *testing.T) {
 		value := map[string]string{
 			"foo": "foo",
@@ -72,7 +72,7 @@ func Test_PtrMap(t *testing.T) {
 			"baz": "baz",
 		}
 
-		pointer := PtrMap(value)
+		pointer := ToMap(value)
 		require.Len(t, pointer, len(value))
 		for k := range value {
 			assert.Equal(t, value[k], *pointer[k])
@@ -86,7 +86,7 @@ func Test_PtrMap(t *testing.T) {
 			99: "baz",
 		}
 
-		pointer := PtrMap(value)
+		pointer := ToMap(value)
 		require.Len(t, pointer, len(value))
 		for k := range value {
 			assert.Equal(t, value[k], *pointer[k])
@@ -99,7 +99,7 @@ func Test_PtrMap(t *testing.T) {
 			false: 69,
 		}
 
-		pointer := PtrMap(value)
+		pointer := ToMap(value)
 		require.Len(t, pointer, len(value))
 		for k := range value {
 			assert.Equal(t, value[k], *pointer[k])
@@ -113,7 +113,7 @@ func Test_PtrMap(t *testing.T) {
 			"baz": {"baz", 420},
 		}
 
-		pointer := PtrMap(value)
+		pointer := ToMap(value)
 		require.Len(t, pointer, len(value))
 		for k := range value {
 			assert.Equal(t, value[k], *pointer[k])
@@ -274,8 +274,8 @@ func Test_Byte(t *testing.T) {
 
 	t.Run("byte/map", func(t *testing.T) {
 		value := map[string]byte{
-			"foo": byte(42), 
-			"bar": byte(69), 
+			"foo": byte(42),
+			"bar": byte(69),
 			"baz": byte(99),
 		}
 
@@ -312,8 +312,8 @@ func Test_ByteValue(t *testing.T) {
 		p2 := byte(69)
 		p3 := byte(99)
 		pointer := map[string]*byte{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -344,8 +344,8 @@ func Test_Int(t *testing.T) {
 
 	t.Run("int/map", func(t *testing.T) {
 		value := map[string]int{
-			"foo": int(42), 
-			"bar": int(69), 
+			"foo": int(42),
+			"bar": int(69),
 			"baz": int(99),
 		}
 
@@ -382,8 +382,8 @@ func Test_IntValue(t *testing.T) {
 		p2 := int(69)
 		p3 := int(99)
 		pointer := map[string]*int{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -414,8 +414,8 @@ func Test_Int8(t *testing.T) {
 
 	t.Run("int8/map", func(t *testing.T) {
 		value := map[string]int8{
-			"foo": int8(42), 
-			"bar": int8(69), 
+			"foo": int8(42),
+			"bar": int8(69),
 			"baz": int8(99),
 		}
 
@@ -452,8 +452,8 @@ func Test_Int8Value(t *testing.T) {
 		p2 := int8(69)
 		p3 := int8(99)
 		pointer := map[string]*int8{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -484,8 +484,8 @@ func Test_Int16(t *testing.T) {
 
 	t.Run("int16/map", func(t *testing.T) {
 		value := map[string]int16{
-			"foo": int16(42), 
-			"bar": int16(69), 
+			"foo": int16(42),
+			"bar": int16(69),
 			"baz": int16(99),
 		}
 
@@ -522,8 +522,8 @@ func Test_Int16Value(t *testing.T) {
 		p2 := int16(69)
 		p3 := int16(99)
 		pointer := map[string]*int16{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -554,8 +554,8 @@ func Test_Int32(t *testing.T) {
 
 	t.Run("int32/map", func(t *testing.T) {
 		value := map[string]int32{
-			"foo": int32(42), 
-			"bar": int32(69), 
+			"foo": int32(42),
+			"bar": int32(69),
 			"baz": int32(99),
 		}
 
@@ -592,8 +592,8 @@ func Test_Int32Value(t *testing.T) {
 		p2 := int32(69)
 		p3 := int32(99)
 		pointer := map[string]*int32{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -624,8 +624,8 @@ func Test_Int64(t *testing.T) {
 
 	t.Run("int64/map", func(t *testing.T) {
 		value := map[string]int64{
-			"foo": int64(42), 
-			"bar": int64(69), 
+			"foo": int64(42),
+			"bar": int64(69),
 			"baz": int64(99),
 		}
 
@@ -662,8 +662,8 @@ func Test_Int64Value(t *testing.T) {
 		p2 := int64(69)
 		p3 := int64(99)
 		pointer := map[string]*int64{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -694,8 +694,8 @@ func Test_Uint8(t *testing.T) {
 
 	t.Run("uint8/map", func(t *testing.T) {
 		value := map[string]uint8{
-			"foo": uint8(42), 
-			"bar": uint8(69), 
+			"foo": uint8(42),
+			"bar": uint8(69),
 			"baz": uint8(99),
 		}
 
@@ -732,8 +732,8 @@ func Test_Uint8Value(t *testing.T) {
 		p2 := uint8(69)
 		p3 := uint8(99)
 		pointer := map[string]*uint8{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -764,8 +764,8 @@ func Test_Uint16(t *testing.T) {
 
 	t.Run("uint16/map", func(t *testing.T) {
 		value := map[string]uint16{
-			"foo": uint16(42), 
-			"bar": uint16(69), 
+			"foo": uint16(42),
+			"bar": uint16(69),
 			"baz": uint16(99),
 		}
 
@@ -802,8 +802,8 @@ func Test_Uint16Value(t *testing.T) {
 		p2 := uint16(69)
 		p3 := uint16(99)
 		pointer := map[string]*uint16{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -834,8 +834,8 @@ func Test_Uint32(t *testing.T) {
 
 	t.Run("uint32/map", func(t *testing.T) {
 		value := map[string]uint32{
-			"foo": uint32(42), 
-			"bar": uint32(69), 
+			"foo": uint32(42),
+			"bar": uint32(69),
 			"baz": uint32(99),
 		}
 
@@ -872,8 +872,8 @@ func Test_Uint32Value(t *testing.T) {
 		p2 := uint32(69)
 		p3 := uint32(99)
 		pointer := map[string]*uint32{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -904,8 +904,8 @@ func Test_Uint64(t *testing.T) {
 
 	t.Run("uint64/map", func(t *testing.T) {
 		value := map[string]uint64{
-			"foo": uint64(42), 
-			"bar": uint64(69), 
+			"foo": uint64(42),
+			"bar": uint64(69),
 			"baz": uint64(99),
 		}
 
@@ -942,8 +942,8 @@ func Test_Uint64Value(t *testing.T) {
 		p2 := uint64(69)
 		p3 := uint64(99)
 		pointer := map[string]*uint64{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -974,8 +974,8 @@ func Test_Float32(t *testing.T) {
 
 	t.Run("float32/map", func(t *testing.T) {
 		value := map[string]float32{
-			"foo": float32(42), 
-			"bar": float32(69), 
+			"foo": float32(42),
+			"bar": float32(69),
 			"baz": float32(99),
 		}
 
@@ -1012,8 +1012,8 @@ func Test_Float32Value(t *testing.T) {
 		p2 := float32(69)
 		p3 := float32(99)
 		pointer := map[string]*float32{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
@@ -1044,8 +1044,8 @@ func Test_Float64(t *testing.T) {
 
 	t.Run("float64/map", func(t *testing.T) {
 		value := map[string]float64{
-			"foo": float64(42), 
-			"bar": float64(69), 
+			"foo": float64(42),
+			"bar": float64(69),
 			"baz": float64(99),
 		}
 
@@ -1082,8 +1082,8 @@ func Test_Float64Value(t *testing.T) {
 		p2 := float64(69)
 		p3 := float64(99)
 		pointer := map[string]*float64{
-			"foo": &p1, 
-			"bar": &p2, 
+			"foo": &p1,
+			"bar": &p2,
 			"baz": &p3,
 		}
 
